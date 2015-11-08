@@ -1,5 +1,6 @@
 base_url <- function() {
-  "http://146.148.79.138/"
+  # "http://146.148.79.138/"
+  "http://www.opencontext.org/"
 }
 
 #' @export

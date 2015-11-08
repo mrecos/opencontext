@@ -25,7 +25,8 @@ oc_browse <- function(type = c("countries", "projects", "descriptions"),
 
   type <- match.arg(type)
 
-  url <- paste0(base_url(), "sets/")
+  # url <- paste0(base_url(), "sets/")
+  url <- paste0(base_url(), "subjects-search/")
   if (print_url) message(url)
 
   req <- GET(url, query = list(), accept_json(), ...)
