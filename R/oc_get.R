@@ -36,8 +36,8 @@ oc_get_countries <- function(country, type = c("projects", "locations",
 #' @export
 oc_get_locations <- function(country, locations, type = c("projects", "descriptions")){
   type <- match.arg(type)
-  oc_get_countries(country, type = "locations") %>%
-  filter_(~label %in% locations) %>%
+  oc_get_countries(country, type = "locations") %>% # gets locations specific to Country
+  filter_(~label %in% locations) %>% # filters down to just areas
   oc_get_records(type)
 }
 
@@ -46,7 +46,8 @@ oc_get_locations <- function(country, locations, type = c("projects", "descripti
 #' @param project A character vector of project names
 #' @return A data frame of resources associated with the projects.
 #' @examples
-#' oc_get_projects("Kenan Tepe")
+#' oc_get_projects("Kenan Tepe") # not a project?
+#' oc_get_projects("Location or Context") # works
 #' @export
 oc_get_projects <- function(project) {
   oc_get_records(project, type = "projects", category = "projects")

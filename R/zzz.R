@@ -19,7 +19,16 @@ if(getRversion() >= "2.15.1") {
   utils::globalVariables(".")
 }
 
+####### Matt's Scratch to work Ben's ideas ####
+cntries <- oc_browse() %>%
+  select(.,count,label)
+print(cntries)
 
+projects <- oc_get_countries("United States") %>%
+  select(.,count,label)
+print(projects)
+
+######
 
 
 ##### Ben's scratchpad ######

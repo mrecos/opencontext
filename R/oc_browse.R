@@ -17,12 +17,14 @@
 #' @param ... Additional arguments passed to \code{\link[httr]{GET}}.
 #' @return A data frame with additional class \code{oc_dataframe}.
 #' @examples
-#' oc_browse("countries")
-#' oc_browse("projects")
+#' oc_browse("countries", print_url = TRUE)
+#' oc_browse("projects", print_url = TRUE)
+#' oc_browse("descriptions", print_url = TRUE)
+#' oc_browse() # defaults to countries
 #' @export
 oc_browse <- function(type = c("countries", "projects", "descriptions"),
                       print_url = FALSE, ...) {
-
+  message(type)
   type <- match.arg(type)
 
   # url <- paste0(base_url(), "sets/")
