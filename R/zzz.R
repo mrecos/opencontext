@@ -20,7 +20,19 @@ if(getRversion() >= "2.15.1") {
 }
 
 ####### Matt's Scratch to work Ben's ideas ####
-cntries <- oc_browse() %>%
+cntries <- oc_browse() %>% # default to countries
+  select(.,count,label)
+print(cntries)
+cntries <- oc_browse(type = "countries") %>% # default to countries
+  select(.,count,label)
+print(cntries)
+cntries <- oc_browse(type = "projects") %>% # default to countries
+  select(.,count,label)
+print(cntries)
+cntries <- oc_browse(type = "descriptions") %>% # default to countries
+  select(.,count,label)
+print(cntries)
+cntries <- oc_browse(type = "categories") %>% # default to countries
   select(.,count,label)
 print(cntries)
 

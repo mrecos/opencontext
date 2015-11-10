@@ -20,15 +20,15 @@
 #' oc_browse("countries", print_url = TRUE)
 #' oc_browse("projects", print_url = TRUE)
 #' oc_browse("descriptions", print_url = TRUE)
-#' oc_browse() # defaults to countries
+#' oc_browse(print_url = TRUE) # defaults to countries
 #' @export
-oc_browse <- function(type = c("countries", "projects", "descriptions"),
+oc_browse <- function(type = c("countries", "categories", "projects", "descriptions"),
                       print_url = FALSE, ...) {
-  message(type)
-  type <- match.arg(type)
+
+    type <- match.arg(type)
 
   # url <- paste0(base_url(), "sets/")
-  url <- paste0(base_url(), "subjects-search/")
+  url <- paste0(base_url(), "search/")
   if (print_url) message(url)
 
   req <- GET(url, query = list(), accept_json(), ...)
@@ -41,8 +41,10 @@ oc_browse <- function(type = c("countries", "projects", "descriptions"),
 
   result <- switch(type,
          "countries" = result$`oc-api:has-facets`$`oc-api:has-id-options`[[1]],
-         "projects"  = result$`oc-api:has-facets`$`oc-api:has-id-options`[[2]],
-         "descriptions"  = result$`oc-api:has-facets`$`oc-api:has-id-options`[[3]]
+         # added this class, "categories" seemed to describe the API response. Ask Eric
+         "categories" = result$`oc-api:has-facets`$`oc-api:has-id-options`[[2]],
+         "projects"  = result$`oc-api:has-facets`$`oc-api:has-id-options`[[3]],
+         "descriptions"  = result$`oc-api:has-facets`$`oc-api:has-id-options`[[4]]
   )
 
   oc_dataframe(result)
