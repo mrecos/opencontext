@@ -33,11 +33,12 @@ oc_get_countries <- function(country, type = c("projects", "locations",
 #' @param type The type of records to return.
 #' @examples
 #' oc_get_locations("Turkey", "Ulucak")
+#' no location errors "table is missing"
 #' @export
 oc_get_locations <- function(country, locations, type = c("projects", "descriptions")){
   type <- match.arg(type)
   oc_get_countries(country, type = "locations") %>% # gets locations specific to Country
-  filter_(~label %in% locations) %>% # filters down to just areas
+  filter_(~label %in% locations) %>% # filters down to just specified locations
   oc_get_records(type)
 }
 
@@ -73,7 +74,7 @@ oc_get_records.oc_dataframe <- function(field, type, category) {
   oc_dataframe(result)
 
 }
-
+# oc_get_records(country, type, category = "countries")
 oc_get_records.character <- function(field, type, category) {
 
   oc_browse(type = category) %>%

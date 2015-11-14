@@ -20,6 +20,7 @@
 #' oc_browse("countries", print_url = TRUE)
 #' oc_browse("projects", print_url = TRUE)
 #' oc_browse("descriptions", print_url = TRUE)
+#' oc_browse("categories", print_url = TRUE)
 #' oc_browse(print_url = TRUE) # defaults to countries
 #' @export
 oc_browse <- function(type = c("countries", "categories", "projects", "descriptions"),
