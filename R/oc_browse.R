@@ -1,3 +1,4 @@
+######### This works as advertised with currect OC API (MH 20160212)
 #' Browse the Open Context archeological database
 #'
 #' This function returns a data frame of certain types of top level data from
@@ -8,16 +9,17 @@
 #'
 #' @param type The kind of to be returned. You can chose either
 #'   \code{'countries'} to get a data frame of names of countries that have Open
-#'   Context datasets, or \code{'projects'} to get a data frame project names,
+#'   Context datasets, \code{'types'} for various data types, or \code{'projects'} to
+#'   get a data frame project names,
 #'   or \code{'descriptions'} to get a data frame of data attributes that are
 #'   widely used in Open Context data sets.
-#' @param print_url Whether or not to display a message with the URL of the
+#'   @param print_url Whether or not to display a message with the URL of the
 #'   query. You can navigate to this URL to see the web interface's version of
 #'   the data returned by the API.
 #' @param ... Additional arguments passed to \code{\link[httr]{GET}}.
 #' @return A data frame with additional class \code{oc_dataframe}.
 #' @examples
-#' oc_browse("countries", print_url = TRUE)
+#' opencontext::oc_browse("countries", print_url = TRUE)
 #' oc_browse("projects", print_url = TRUE)
 #' oc_browse("descriptions", print_url = TRUE)
 #' oc_browse("categories", print_url = TRUE)
@@ -26,9 +28,8 @@
 oc_browse <- function(type = c("countries", "categories", "projects", "descriptions"),
                       print_url = FALSE, ...) {
 
-    type <- match.arg(type)
+  type <- match.arg(type)
 
-  # url <- paste0(base_url(), "sets/")
   url <- paste0(base_url(), "search/")
   if (print_url) message(url)
 
@@ -37,12 +38,11 @@ oc_browse <- function(type = c("countries", "categories", "projects", "descripti
 
   response <- content(req, as = "text")
 
-  if (identical(response, "")) stop("")
+  if (identical(response, "")) stop("Error: Empty Response") # error response
   result <- fromJSON(response)
 
   result <- switch(type,
          "countries" = result$`oc-api:has-facets`$`oc-api:has-id-options`[[1]],
-         # added this class, "categories" seemed to describe the API response. Ask Eric
          "categories" = result$`oc-api:has-facets`$`oc-api:has-id-options`[[2]],
          "projects"  = result$`oc-api:has-facets`$`oc-api:has-id-options`[[3]],
          "descriptions"  = result$`oc-api:has-facets`$`oc-api:has-id-options`[[4]]
